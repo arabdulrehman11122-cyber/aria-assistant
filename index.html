@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ARIA">
+<meta name="theme-color" content="#09090f">
+<title>ARIA — Your AI Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#09090f;
+  --surface:#12121a;
+  --surface2:#1a1a26;
+  --border:#ffffff0f;
+  --accent:#c084fc;
+  --accent2:#818cf8;
+  --accent3:#38bdf8;
+  --text:#f1f0ff;
+  --muted:#6b6b8a;
+  --danger:#f87171;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow:hidden;}
+#app{max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;position:relative;}
+#app::before{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,#c084fc18 0%,transparent 70%);pointer-events:none;z-index:0;}
+
+/* header */
+#header{padding:env(safe-area-inset-top, 1rem) 1.25rem 0.75rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;padding-top:max(env(safe-area-inset-top),1rem);}
+#brand{display:flex;align-items:center;gap:10px;}
+#brand-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
+#brand-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:0.08em;background:linear-gradient(135deg,#c084fc,#818cf8,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#status-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;}
+#status-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);transition:all 0.3s;}
+#status-dot.on{background:#4ade80;box-shadow:0 0 8px #4ade80;}
+#status-dot.thinking{background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1s infinite;}
+#status-dot.listening{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 0.6s infinite;}
+
+/* orb */
+#orb-section{display:flex;flex-direction:column;align-items:center;padding:1rem 0 0.75rem;position:relative;z-index:1;}
+#orb-wrap{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#orb-ring{position:absolute;inset:0;border-radius:50%;border:1px solid #c084fc22;animation:spin 8s linear infinite;}
+#orb-ring2{position:absolute;inset:8px;border-radius:50%;border:1px solid #818cf822;animation:spin 5s linear infinite reverse;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+#orb{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #c084fc33;display:flex;align-items:center;justify-content:center;transition:all 0.4s;position:relative;overflow:hidden;}
+#orb::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c084fc15,transparent 60%);}
+#orb svg{width:34px;height:34px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all 0.3s;}
+#orb.listening{border-color:#f8717155;box-shadow:0 0 30px #f8717122;}
+#orb.listening svg{stroke:var(--danger);}
+#orb.thinking{border-color:#c084fc55;box-shadow:0 0 30px #c084fc22;}
+#orb-label{margin-top:8px;font-size:11px;color:var(--muted);letter-spacing:0.05em;}
+
+/* chat */
+#chat-wrap{flex:1;overflow:hidden;position:relative;z-index:1;}
+#chat{height:100%;padding:0 1rem;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:0.5rem;}
+#chat::-webkit-scrollbar{width:3px;}
+#chat::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{display:flex;gap:8px;align-items:flex-end;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse;}
+.avatar{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;}
+.msg.aria .avatar{background:linear-gradient(135deg,#c084fc33,#818cf833);border:1px solid #c084fc44;color:var(--accent);}
+.msg.user .avatar{background:linear-gradient(135deg,#38bdf833,#818cf833);border:1px solid #38bdf844;color:var(--accent3);}
+.bubble{padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.55;max-width:80%;}
+.msg.aria .bubble{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text);}
+.msg.user .bubble{background:linear-gradient(135deg,#c084fc22,#818cf822);border:1px solid #c084fc22;border-bottom-right-radius:4px;color:var(--text);}
+.typing-dots{display:flex;gap:4px;padding:4px 2px;}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite;}
+.typing-dots span:nth-child(2){animation-delay:.2s;}
+.typing-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* tasks */
+#tasks-wrap{margin:0.5rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;z-index:1;}
+#tasks-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);}
+#tasks-head span{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;}
+#tasks-head em{font-style:normal;font-size:11px;color:var(--muted);}
+#task-list{max-height:110px;overflow-y:auto;}
+.task-row{display:flex;align-items:center;gap:10px;padding:7px 14px;transition:background 0.2s;}
+.task-row:hover{background:var(--surface2);}
+.task-cb{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--muted);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:9px;color:white;}
+.task-cb.done{background:var(--accent);border-color:var(--accent);}
+.task-txt{flex:1;font-size:13px;color:var(--text);}
+.task-txt.done{text-decoration:line-through;color:var(--muted);}
+.task-del{font-size:13px;color:var(--muted);cursor:pointer;opacity:0;transition:opacity 0.2s;}
+.task-row:hover .task-del{opacity:1;}
+#tasks-empty{padding:12px;text-align:center;font-size:12px;color:var(--muted);}
+
+/* input */
+#input-section{padding:0.5rem 1rem;padding-bottom:max(env(safe-area-inset-bottom),1rem);position:relative;z-index:1;}
+#input-bar{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:6px 6px 6px 16px;transition:border-color 0.3s;}
+#input-bar:focus-within{border-color:#c084fc44;}
+#text-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);}
+#text-input::placeholder{color:var(--muted);}
+#mic-btn,#send-btn{width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;}
+#mic-btn{background:var(--surface2);}
+#mic-btn svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;}
+#mic-btn.active{background:#f8717122;}
+#mic-btn.active svg{stroke:var(--danger);}
+#send-btn{background:linear-gradient(135deg,#c084fc,#818cf8);}
+#send-btn svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+#send-btn:active{transform:scale(0.96);}
+#no-voice{display:none;font-size:11px;color:var(--danger);text-align:center;margin-top:5px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div id="brand">
+      <div id="brand-dot"></div>
+      <div id="brand-name">ARIA</div>
+    </div>
+    <div id="status-pill">
+      <div id="status-dot" class="on"></div>
+      <span id="status-label">online</span>
+    </div>
+  </div>
+
+  <div id="orb-section">
+    <div id="orb-wrap" onclick="orbClick()">
+      <div id="orb-ring"></div>
+      <div id="orb-ring2"></div>
+      <div id="orb">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      </div>
+    </div>
+    <div id="orb-label">tap to speak</div>
+  </div>
+
+  <div id="chat-wrap">
+    <div id="chat">
+      <div class="msg aria">
+        <div class="avatar">A</div>
+        <div class="bubble">Hey! I'm ARIA — your personal AI assistant. Ask me anything, add tasks, search the web, or draft your next post. 💜</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tasks-wrap">
+    <div id="tasks-head">
+      <span>Tasks</span>
+      <em id="task-count">0 tasks</em>
+    </div>
+    <div id="task-list"><div id="tasks-empty">Ask ARIA to add a task</div></div>
+  </div>
+
+  <div id="input-section">
+    <div id="input-bar">
+      <input id="text-input" type="text" placeholder="Ask ARIA anything..." autocomplete="off"/>
+      <button id="mic-btn" aria-label="Voice input">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+      </button>
+      <button id="send-btn" aria-label="Send">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div id="no-voice">Voice not supported. Use text input.</div>
+  </div>
+</div>
+
+<script>
+const GROQ_KEY = "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";
+const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+const chat = document.getElementById('chat');
+const textInput = document.getElementById('text-input');
+const micBtn = document.getElementById('mic-btn');
+const sendBtn = document.getElementById('send-btn');
+const orb = document.getElementById('orb');
+const orbLabel = document.getElementById('orb-label');
+const statusDot = document.getElementById('status-dot');
+const statusLabel = document.getElementById('status-label');
+const taskList = document.getElementById('task-list');
+const taskCount = document.getElementById('task-count');
+const noVoice = document.getElementById('no-voice');
+
+let tasks = JSON.parse(localStorage.getItem('aria-tasks')||'[]');
+let isThinking = false;
+let isListening = false;
+let recognition = null;
+let history = [];
+
+function saveTasks(){localStorage.setItem('aria-tasks',JSON.stringify(tasks));}
+
+function setStatus(state){
+  statusDot.className='';
+  if(state==='thinking'){statusDot.classList.add('thinking');statusLabel.textContent='thinking';orb.className='thinking';orbLabel.textContent='processing...';}
+  else if(state==='listening'){statusDot.classList.add('listening');statusLabel.textContent='listening';orb.className='listening';orbLabel.textContent='listening...';}
+  else{statusDot.classList.add('on');statusLabel.textContent='online';orb.className='';orbLabel.textContent='tap to speak';}
+}
+
+function addMsg(role,text){
+  const isUser=role==='user';
+  const div=document.createElement('div');
+  div.className=`msg ${isUser?'user':'aria'}`;
+  div.innerHTML=`<div class="avatar">${isUser?'U':'A'}</div><div class="bubble">${text}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function showTyping(){
+  const div=document.createElement('div');
+  div.className='msg aria';div.id='typing';
+  div.innerHTML='<div class="avatar">A</div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
+  chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
+}
+function removeTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+function updateTasks(){
+  const done=tasks.filter(t=>t.done).length;
+  taskCount.textContent=`${tasks.length} task${tasks.length!==1?'s':''} · ${done} done`;
+  if(!tasks.length){taskList.innerHTML='<div id="tasks-empty">Ask ARIA to add a task</div>';return;}
+  taskList.innerHTML=tasks.map((t,i)=>`
+    <div class="task-row">
+      <div class="task-cb ${t.done?'done':''}" onclick="toggleTask(${i})">${t.done?'✓':''}</div>
+      <span class="task-txt ${t.done?'done':''}">${t.label}</span>
+      <span class="task-del" onclick="delTask(${i})">✕</span>
+    </div>`).join('');
+}
+
+window.toggleTask=i=>{tasks[i].done=!tasks[i].done;saveTasks();updateTasks();};
+window.delTask=i=>{tasks.splice(i,1);saveTasks();updateTasks();};
+
+function speak(text){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const clean=text.replace(/[*_`#]/g,'');
+  const u=new SpeechSynthesisUtterance(clean);
+  u.rate=1.05;u.pitch=1.1;
+  const voices=speechSynthesis.getVoices();
+  const fem=voices.find(v=>v.name.includes('Samantha')||v.name.includes('Female')||v.name.includes('Zira')||v.name.includes('Google UK English Female'));
+  if(fem)u.voice=fem;
+  speechSynthesis.speak(u);
+}
+
+async function sendToAria(userMsg){
+  if(isThinking||!userMsg.trim())return;
+  isThinking=true;
+  addMsg('user',userMsg);
+  setStatus('thinking');
+  showTyping();
+
+  const taskSnap=tasks.length?tasks.map((t,i)=>`${i+1}.[${t.done?'done':'pending'}] ${t.label}`).join(', '):'none';
+
+  const systemPrompt=`You are ARIA — a smart, warm, female AI personal assistant created for Aerie Sulemani. You're sharp, concise, and get things done fast.
+
+Current tasks: ${taskSnap}
+
+You help with: managing tasks, drafting Instagram/YouTube captions, answering questions, searching knowledge, giving advice on content creation and AI tools.
+
+Always respond ONLY in this exact JSON format with no extra text:
+{"reply": "your short friendly response", "actions": []}
+
+For task actions:
+{"reply": "Done! Added to your list.", "actions": [{"type": "add", "label": "task name"}]}
+{"reply": "Marked as done!", "actions": [{"type": "done", "index": 0}]}
+{"reply": "Deleted!", "actions": [{"type": "delete", "index": 0}]}
+
+Rules:
+- Max 2 sentences in reply
+- Warm, confident, female assistant tone
+- No markdown formatting
+- Return ONLY valid JSON`;
+
+  history.push({role:'user',content:userMsg});
+  if(history.length>12)history=history.slice(-12);
+
+  try{
+    const res=await fetch(GROQ_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${GROQ_KEY}`},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:400,
+        messages:[{role:'system',content:systemPrompt},...history]
+      })
+    });
+    const data=await res.json();
+    const raw=data.choices?.[0]?.message?.content||'{"reply":"Sorry, I had trouble with that. Try again!","actions":[]}';
+    history.push({role:'assistant',content:raw});
+
+    let parsed;
+    try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
+    catch{parsed={reply:raw,actions:[]};}
+
+    removeTyping();
+    addMsg('aria',parsed.reply);
+    speak(parsed.reply);
+
+    (parsed.actions||[]).forEach(a=>{
+      if(a.type==='add')tasks.push({label:a.label,done:false});
+      if(a.type==='done'&&tasks[a.index])tasks[a.index].done=true;
+      if(a.type==='delete')tasks.splice(a.index,1);
+    });
+    saveTasks();
+    updateTasks();
+  }catch(e){
+    removeTyping();
+    addMsg('aria','Connection issue. Check your internet and try again.');
+  }
+
+  setStatus('online');
+  isThinking=false;
+}
+
+sendBtn.addEventListener('click',()=>{const v=textInput.value.trim();if(v){textInput.value='';sendToAria(v);}});
+textInput.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=textInput.value.trim();if(v){textInput.value='';sendToAria(v);}}});
+
+if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.continuous=false;recognition.interimResults=false;recognition.lang='en-US';
+  recognition.onresult=e=>{const t=e.results[0][0].transcript;textInput.value=t;stopListen();sendToAria(t);};
+  recognition.onerror=()=>stopListen();
+  recognition.onend=()=>{if(isListening)stopListen();};
+  function startListen(){isListening=true;micBtn.classList.add('active');setStatus('listening');try{recognition.start();}catch(e){}}
+  function stopListen(){isListening=false;micBtn.classList.remove('active');if(!isThinking)setStatus('online');try{recognition.stop();}catch(e){}}
+  micBtn.addEventListener('click',()=>{if(isListening)stopListen();else startListen();});
+  window.orbClick=()=>{if(isListening)stopListen();else startListen();};
+}else{
+  noVoice.style.display='block';
+  window.orbClick=()=>{textInput.focus();};
+}
+
+speechSynthesis.onvoiceschanged=()=>{};
+updateTasks();
+</script>
+</body>
+</html>
