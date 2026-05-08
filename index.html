@@ -12,51 +12,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#09090f;
-  --surface:#12121a;
-  --surface2:#1a1a26;
-  --border:#ffffff0f;
-  --accent:#c084fc;
-  --accent2:#818cf8;
-  --accent3:#38bdf8;
-  --text:#f1f0ff;
-  --muted:#6b6b8a;
-  --danger:#f87171;
-}
+:root{--bg:#09090f;--surface:#12121a;--surface2:#1a1a26;--border:#ffffff0f;--accent:#c084fc;--accent2:#818cf8;--accent3:#38bdf8;--text:#f1f0ff;--muted:#6b6b8a;--danger:#f87171;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow:hidden;}
 #app{max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;position:relative;}
 #app::before{content:'';position:fixed;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,#c084fc18 0%,transparent 70%);pointer-events:none;z-index:0;}
-
-/* header */
-#header{padding:env(safe-area-inset-top, 1rem) 1.25rem 0.75rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;padding-top:max(env(safe-area-inset-top),1rem);}
+#header{padding:max(env(safe-area-inset-top),1rem) 1.25rem 0.75rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
 #brand{display:flex;align-items:center;gap:10px;}
 #brand-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.8)}}
 #brand-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:0.08em;background:linear-gradient(135deg,#c084fc,#818cf8,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-#status-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;}
+#status-pill{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11px;color:var(--muted);}
 #status-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);transition:all 0.3s;}
 #status-dot.on{background:#4ade80;box-shadow:0 0 8px #4ade80;}
 #status-dot.thinking{background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1s infinite;}
 #status-dot.listening{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 0.6s infinite;}
-
-/* orb */
-#orb-section{display:flex;flex-direction:column;align-items:center;padding:1rem 0 0.75rem;position:relative;z-index:1;}
-#orb-wrap{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#orb-section{display:flex;flex-direction:column;align-items:center;padding:0.75rem 0;position:relative;z-index:1;}
+#orb-wrap{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 #orb-ring{position:absolute;inset:0;border-radius:50%;border:1px solid #c084fc22;animation:spin 8s linear infinite;}
 #orb-ring2{position:absolute;inset:8px;border-radius:50%;border:1px solid #818cf822;animation:spin 5s linear infinite reverse;}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-#orb{width:86px;height:86px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #c084fc33;display:flex;align-items:center;justify-content:center;transition:all 0.4s;position:relative;overflow:hidden;}
-#orb::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c084fc15,transparent 60%);}
-#orb svg{width:34px;height:34px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all 0.3s;}
+#orb{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #c084fc33;display:flex;align-items:center;justify-content:center;transition:all 0.4s;position:relative;overflow:hidden;}
+#orb svg{width:32px;height:32px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all 0.3s;}
 #orb.listening{border-color:#f8717155;box-shadow:0 0 30px #f8717122;}
 #orb.listening svg{stroke:var(--danger);}
 #orb.thinking{border-color:#c084fc55;box-shadow:0 0 30px #c084fc22;}
-#orb-label{margin-top:8px;font-size:11px;color:var(--muted);letter-spacing:0.05em;}
-
+#orb-label{margin-top:6px;font-size:11px;color:var(--muted);letter-spacing:0.05em;}
+/* quick actions */
+#quick-actions{display:flex;gap:8px;padding:0 1rem 0.75rem;overflow-x:auto;position:relative;z-index:1;scrollbar-width:none;}
+#quick-actions::-webkit-scrollbar{display:none;}
+.qa-btn{flex-shrink:0;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.qa-btn:hover{border-color:#c084fc44;color:var(--accent);}
 /* chat */
 #chat-wrap{flex:1;overflow:hidden;position:relative;z-index:1;}
-#chat{height:100%;padding:0 1rem;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:0.5rem;}
+#chat{height:100%;padding:0 1rem 0.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
 #chat::-webkit-scrollbar{width:3px;}
 #chat::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 .msg{display:flex;gap:8px;align-items:flex-end;animation:fadeUp 0.3s ease;}
@@ -73,14 +61,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .typing-dots span:nth-child(2){animation-delay:.2s;}
 .typing-dots span:nth-child(3){animation-delay:.4s;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-
 /* tasks */
 #tasks-wrap{margin:0.5rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;z-index:1;}
-#tasks-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);}
+#tasks-head{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);}
 #tasks-head span{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;}
 #tasks-head em{font-style:normal;font-size:11px;color:var(--muted);}
-#task-list{max-height:110px;overflow-y:auto;}
-.task-row{display:flex;align-items:center;gap:10px;padding:7px 14px;transition:background 0.2s;}
+#task-list{max-height:100px;overflow-y:auto;}
+.task-row{display:flex;align-items:center;gap:10px;padding:6px 14px;transition:background 0.2s;}
 .task-row:hover{background:var(--surface2);}
 .task-cb{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--muted);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:9px;color:white;}
 .task-cb.done{background:var(--accent);border-color:var(--accent);}
@@ -88,8 +75,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .task-txt.done{text-decoration:line-through;color:var(--muted);}
 .task-del{font-size:13px;color:var(--muted);cursor:pointer;opacity:0;transition:opacity 0.2s;}
 .task-row:hover .task-del{opacity:1;}
-#tasks-empty{padding:12px;text-align:center;font-size:12px;color:var(--muted);}
-
+#tasks-empty{padding:10px;text-align:center;font-size:12px;color:var(--muted);}
 /* input */
 #input-section{padding:0.5rem 1rem;padding-bottom:max(env(safe-area-inset-bottom),1rem);position:relative;z-index:1;}
 #input-bar{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:6px 6px 6px 16px;transition:border-color 0.3s;}
@@ -131,11 +117,23 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
     <div id="orb-label">tap to speak</div>
   </div>
 
+  <!-- Quick action buttons -->
+  <div id="quick-actions">
+    <button class="qa-btn" onclick="quickAction('Open Instagram')">📸 Instagram</button>
+    <button class="qa-btn" onclick="quickAction('Open WhatsApp')">💬 WhatsApp</button>
+    <button class="qa-btn" onclick="quickAction('Open YouTube')">🎥 YouTube</button>
+    <button class="qa-btn" onclick="quickAction('Open Gallery')">🖼️ Gallery</button>
+    <button class="qa-btn" onclick="quickAction('Open Spotify')">🎵 Spotify</button>
+    <button class="qa-btn" onclick="quickAction('Open Maps')">🗺️ Maps</button>
+    <button class="qa-btn" onclick="quickAction('Open Gmail')">📧 Gmail</button>
+    <button class="qa-btn" onclick="quickAction('Open TikTok')">🎵 TikTok</button>
+  </div>
+
   <div id="chat-wrap">
     <div id="chat">
       <div class="msg aria">
         <div class="avatar">A</div>
-        <div class="bubble">Hey! I'm ARIA — your personal AI assistant. Ask me anything, add tasks, search the web, or draft your next post. 💜</div>
+        <div class="bubble">Hey! I'm ARIA 💜 I can open your apps, manage tasks, draft captions, and answer anything. Try "Open Instagram" or tap the buttons above!</div>
       </div>
     </div>
   </div>
@@ -150,7 +148,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 
   <div id="input-section">
     <div id="input-bar">
-      <input id="text-input" type="text" placeholder="Ask ARIA anything..." autocomplete="off"/>
+      <input id="text-input" type="text" placeholder="Ask ARIA or say 'open Instagram'..." autocomplete="off"/>
       <button id="mic-btn" aria-label="Voice input">
         <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
       </button>
@@ -185,6 +183,63 @@ let recognition = null;
 let history = [];
 
 function saveTasks(){localStorage.setItem('aria-tasks',JSON.stringify(tasks));}
+
+// App deep links
+const APP_ACTIONS = {
+  'open instagram': ()=>{ window.location.href='instagram://'; setTimeout(()=>window.open('https://instagram.com','_blank'),1500); },
+  'open whatsapp': ()=>{ window.location.href='whatsapp://'; setTimeout(()=>window.open('https://wa.me','_blank'),1500); },
+  'open youtube': ()=>{ window.location.href='youtube://'; setTimeout(()=>window.open('https://youtube.com','_blank'),1500); },
+  'open facebook': ()=>{ window.location.href='fb://'; setTimeout(()=>window.open('https://facebook.com','_blank'),1500); },
+  'open tiktok': ()=>{ window.location.href='tiktok://'; setTimeout(()=>window.open('https://tiktok.com','_blank'),1500); },
+  'open gmail': ()=>window.open('https://mail.google.com','_blank'),
+  'open google': ()=>window.open('https://google.com','_blank'),
+  'open maps': ()=>window.open('https://maps.google.com','_blank'),
+  'open spotify': ()=>{ window.location.href='spotify://'; setTimeout(()=>window.open('https://open.spotify.com','_blank'),1500); },
+  'open netflix': ()=>{ window.location.href='nflx://'; setTimeout(()=>window.open('https://netflix.com','_blank'),1500); },
+  'open twitter': ()=>window.open('https://twitter.com','_blank'),
+  'open camera': ()=>window.open('https://camera.google.com','_blank'),
+  'open gallery': ()=>window.open('https://photos.google.com','_blank'),
+  'open photos': ()=>window.open('https://photos.google.com','_blank'),
+  'play music': ()=>{ window.location.href='spotify://'; setTimeout(()=>window.open('https://open.spotify.com','_blank'),1500); },
+};
+
+const ACTION_REPLIES = {
+  'open instagram':'Opening Instagram for you! 📸',
+  'open whatsapp':'Opening WhatsApp! 💬',
+  'open youtube':'Opening YouTube! 🎥',
+  'open facebook':'Opening Facebook! 👍',
+  'open tiktok':'Opening TikTok! 🎵',
+  'open gmail':'Opening Gmail! 📧',
+  'open google':'Opening Google! 🔍',
+  'open maps':'Opening Maps! 🗺️',
+  'open spotify':'Opening Spotify! 🎶',
+  'open netflix':'Opening Netflix! 🎬',
+  'open twitter':'Opening Twitter! 🐦',
+  'open camera':'Opening Camera! 📷',
+  'open gallery':'Opening your Photos! 🖼️',
+  'open photos':'Opening your Photos! 🖼️',
+  'play music':'Playing music on Spotify! 🎵',
+};
+
+function checkAppAction(text){
+  const lower = text.toLowerCase();
+  for(const [key, action] of Object.entries(APP_ACTIONS)){
+    if(lower.includes(key)){ action(); return ACTION_REPLIES[key]||'Done! Opening that for you! ✨'; }
+  }
+  const searchMatch = lower.match(/^search (?:for |about |on google )?(.+)/);
+  if(searchMatch){ window.open(`https://www.google.com/search?q=${encodeURIComponent(searchMatch[1])}`,'_blank'); return `Searching Google for "${searchMatch[1]}"! 🔍`; }
+  const callMatch = lower.match(/^call (.+)/);
+  if(callMatch){ window.location.href=`tel:${callMatch[1].replace(/\s/g,'')}`; return `Calling ${callMatch[1]}! 📞`; }
+  const waMatch = lower.match(/(?:send whatsapp to|whatsapp message to) (.+)/);
+  if(waMatch){ window.open(`https://wa.me/?text=${encodeURIComponent(waMatch[1])}`,'_blank'); return `Opening WhatsApp for ${waMatch[1]}! 💬`; }
+  const ytMatch = lower.match(/^(?:youtube|watch on youtube|play on youtube) (.+)/);
+  if(ytMatch){ window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(ytMatch[1])}`,'_blank'); return `Searching YouTube for "${ytMatch[1]}"! 🎥`; }
+  const mapsMatch = lower.match(/(?:navigate to|directions to|take me to) (.+)/);
+  if(mapsMatch){ window.open(`https://maps.google.com/maps?q=${encodeURIComponent(mapsMatch[1])}`,'_blank'); return `Getting directions to ${mapsMatch[1]}! 🗺️`; }
+  return null;
+}
+
+window.quickAction = (text) => sendToAria(text);
 
 function setStatus(state){
   statusDot.className='';
@@ -221,27 +276,13 @@ function updateTasks(){
       <span class="task-del" onclick="delTask(${i})">✕</span>
     </div>`).join('');
 }
-
 window.toggleTask=i=>{tasks[i].done=!tasks[i].done;saveTasks();updateTasks();};
 window.delTask=i=>{tasks.splice(i,1);saveTasks();updateTasks();};
 
 function getBestVoice(){
   const voices=speechSynthesis.getVoices();
-  // Priority: young, bright, natural-sounding female voices
-  const preferred=[
-    'Google US English',
-    'Samantha',          // macOS/iOS — young, clear
-    'Karen',             // Australian — bright and young
-    'Tessa',             // South African — light and fresh
-    'Microsoft Zira',    // Windows — young female
-    'Moira',             // Irish — natural
-    'Victoria',
-    'Veena',
-  ];
-  for(const name of preferred){
-    const v=voices.find(v=>v.name.includes(name));
-    if(v)return v;
-  }
+  const preferred=['Google US English','Samantha','Karen','Tessa','Microsoft Zira','Moira','Victoria','Veena'];
+  for(const name of preferred){const v=voices.find(v=>v.name.includes(name));if(v)return v;}
   const fem=voices.find(v=>v.name.toLowerCase().includes('female'));
   if(fem)return fem;
   return voices.find(v=>v.lang.startsWith('en'))||voices[0]||null;
@@ -252,12 +293,9 @@ function speak(text){
   speechSynthesis.cancel();
   const clean=text.replace(/[*_`#]/g,'');
   const u=new SpeechSynthesisUtterance(clean);
-  u.rate=1.08;   // slightly faster = young, energetic feel
-  u.pitch=1.35;  // higher pitch = younger girl sound
-  u.volume=1;
+  u.rate=1.08;u.pitch=1.35;u.volume=1;
   const voice=getBestVoice();
   if(voice)u.voice=voice;
-  // Small trick: split into sentences for more natural delivery
   speechSynthesis.speak(u);
 }
 
@@ -266,29 +304,34 @@ async function sendToAria(userMsg){
   isThinking=true;
   addMsg('user',userMsg);
   setStatus('thinking');
+
+  // Check app actions first — instant response
+  const actionReply = checkAppAction(userMsg);
+  if(actionReply){
+    addMsg('aria', actionReply);
+    speak(actionReply);
+    setStatus('online');
+    isThinking=false;
+    return;
+  }
+
   showTyping();
-
   const taskSnap=tasks.length?tasks.map((t,i)=>`${i+1}.[${t.done?'done':'pending'}] ${t.label}`).join(', '):'none';
-
-  const systemPrompt=`You are ARIA — a smart, warm, female AI personal assistant created for Aerie Sulemani. You're sharp, concise, and get things done fast.
+  const systemPrompt=`You are ARIA — a smart, warm, female AI personal assistant for Aerie Sulemani, an AI content creator making Instagram Reels and YouTube Shorts.
 
 Current tasks: ${taskSnap}
 
-You help with: managing tasks, drafting Instagram/YouTube captions, answering questions, searching knowledge, giving advice on content creation and AI tools.
+You help with: tasks, Instagram/YouTube captions, content ideas, AI tools advice, answering questions.
 
-Always respond ONLY in this exact JSON format with no extra text:
-{"reply": "your short friendly response", "actions": []}
+Respond ONLY in this exact JSON:
+{"reply": "short friendly response max 2 sentences", "actions": []}
 
-For task actions:
-{"reply": "Done! Added to your list.", "actions": [{"type": "add", "label": "task name"}]}
-{"reply": "Marked as done!", "actions": [{"type": "done", "index": 0}]}
+Task actions:
+{"reply": "Added!", "actions": [{"type": "add", "label": "task name"}]}
+{"reply": "Done!", "actions": [{"type": "done", "index": 0}]}
 {"reply": "Deleted!", "actions": [{"type": "delete", "index": 0}]}
 
-Rules:
-- Max 2 sentences in reply
-- Warm, confident, female assistant tone
-- No markdown formatting
-- Return ONLY valid JSON`;
+Tone: warm, young, confident female. No markdown. ONLY valid JSON.`;
 
   history.push({role:'user',content:userMsg});
   if(history.length>12)history=history.slice(-12);
@@ -297,24 +340,17 @@ Rules:
     const res=await fetch(GROQ_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':`Bearer ${GROQ_KEY}`},
-      body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        max_tokens:400,
-        messages:[{role:'system',content:systemPrompt},...history]
-      })
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:400,messages:[{role:'system',content:systemPrompt},...history]})
     });
     const data=await res.json();
-    const raw=data.choices?.[0]?.message?.content||'{"reply":"Sorry, I had trouble with that. Try again!","actions":[]}';
+    const raw=data.choices?.[0]?.message?.content||'{"reply":"Sorry, try again!","actions":[]}';
     history.push({role:'assistant',content:raw});
-
     let parsed;
     try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
     catch{parsed={reply:raw,actions:[]};}
-
     removeTyping();
     addMsg('aria',parsed.reply);
     speak(parsed.reply);
-
     (parsed.actions||[]).forEach(a=>{
       if(a.type==='add')tasks.push({label:a.label,done:false});
       if(a.type==='done'&&tasks[a.index])tasks[a.index].done=true;
@@ -326,7 +362,6 @@ Rules:
     removeTyping();
     addMsg('aria','Connection issue. Check your internet and try again.');
   }
-
   setStatus('online');
   isThinking=false;
 }
