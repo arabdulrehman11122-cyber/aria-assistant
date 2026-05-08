@@ -225,15 +225,40 @@ function updateTasks(){
 window.toggleTask=i=>{tasks[i].done=!tasks[i].done;saveTasks();updateTasks();};
 window.delTask=i=>{tasks.splice(i,1);saveTasks();updateTasks();};
 
+function getBestVoice(){
+  const voices=speechSynthesis.getVoices();
+  // Priority list — warm, natural female voices
+  const preferred=[
+    'Google US English',
+    'Samantha',
+    'Microsoft Zira',
+    'Karen',
+    'Moira',
+    'Tessa',
+    'Veena',
+    'Victoria',
+  ];
+  for(const name of preferred){
+    const v=voices.find(v=>v.name.includes(name));
+    if(v)return v;
+  }
+  // fallback: any female-labeled voice
+  const fem=voices.find(v=>v.name.toLowerCase().includes('female'));
+  if(fem)return fem;
+  // last resort: first English voice
+  return voices.find(v=>v.lang.startsWith('en'))||voices[0]||null;
+}
+
 function speak(text){
   if(!window.speechSynthesis)return;
   speechSynthesis.cancel();
   const clean=text.replace(/[*_`#]/g,'');
   const u=new SpeechSynthesisUtterance(clean);
-  u.rate=1.05;u.pitch=1.1;
-  const voices=speechSynthesis.getVoices();
-  const fem=voices.find(v=>v.name.includes('Samantha')||v.name.includes('Female')||v.name.includes('Zira')||v.name.includes('Google UK English Female'));
-  if(fem)u.voice=fem;
+  u.rate=0.97;   // slightly slower = warmer feel
+  u.pitch=1.15;  // slightly higher = friendly girl tone
+  u.volume=1;
+  const voice=getBestVoice();
+  if(voice)u.voice=voice;
   speechSynthesis.speak(u);
 }
 
