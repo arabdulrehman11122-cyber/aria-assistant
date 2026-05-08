@@ -26,23 +26,21 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 #status-dot.on{background:#4ade80;box-shadow:0 0 8px #4ade80;}
 #status-dot.thinking{background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1s infinite;}
 #status-dot.listening{background:var(--danger);box-shadow:0 0 8px var(--danger);animation:pulse 0.6s infinite;}
-#orb-section{display:flex;flex-direction:column;align-items:center;padding:0.75rem 0;position:relative;z-index:1;}
-#orb-wrap{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#orb-section{display:flex;flex-direction:column;align-items:center;padding:0.5rem 0;position:relative;z-index:1;}
+#orb-wrap{position:relative;width:100px;height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 #orb-ring{position:absolute;inset:0;border-radius:50%;border:1px solid #c084fc22;animation:spin 8s linear infinite;}
 #orb-ring2{position:absolute;inset:8px;border-radius:50%;border:1px solid #818cf822;animation:spin 5s linear infinite reverse;}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-#orb{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #c084fc33;display:flex;align-items:center;justify-content:center;transition:all 0.4s;position:relative;overflow:hidden;}
-#orb svg{width:32px;height:32px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all 0.3s;}
+#orb{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid #c084fc33;display:flex;align-items:center;justify-content:center;transition:all 0.4s;position:relative;overflow:hidden;}
+#orb svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:all 0.3s;}
 #orb.listening{border-color:#f8717155;box-shadow:0 0 30px #f8717122;}
 #orb.listening svg{stroke:var(--danger);}
 #orb.thinking{border-color:#c084fc55;box-shadow:0 0 30px #c084fc22;}
-#orb-label{margin-top:6px;font-size:11px;color:var(--muted);letter-spacing:0.05em;}
-/* quick actions */
-#quick-actions{display:flex;gap:8px;padding:0 1rem 0.75rem;overflow-x:auto;position:relative;z-index:1;scrollbar-width:none;}
+#orb-label{margin-top:5px;font-size:11px;color:var(--muted);letter-spacing:0.05em;}
+#quick-actions{display:flex;gap:7px;padding:0.5rem 1rem;overflow-x:auto;position:relative;z-index:1;scrollbar-width:none;}
 #quick-actions::-webkit-scrollbar{display:none;}
-.qa-btn{flex-shrink:0;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-.qa-btn:hover{border-color:#c084fc44;color:var(--accent);}
-/* chat */
+.qa-btn{flex-shrink:0;padding:6px 11px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11.5px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.qa-btn:active{border-color:#c084fc44;color:var(--accent);transform:scale(0.97);}
 #chat-wrap{flex:1;overflow:hidden;position:relative;z-index:1;}
 #chat{height:100%;padding:0 1rem 0.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
 #chat::-webkit-scrollbar{width:3px;}
@@ -53,31 +51,31 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .avatar{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;}
 .msg.aria .avatar{background:linear-gradient(135deg,#c084fc33,#818cf833);border:1px solid #c084fc44;color:var(--accent);}
 .msg.user .avatar{background:linear-gradient(135deg,#38bdf833,#818cf833);border:1px solid #38bdf844;color:var(--accent3);}
-.bubble{padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.55;max-width:80%;}
+.bubble{padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.55;max-width:82%;}
 .msg.aria .bubble{background:var(--surface2);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text);}
 .msg.user .bubble{background:linear-gradient(135deg,#c084fc22,#818cf822);border:1px solid #c084fc22;border-bottom-right-radius:4px;color:var(--text);}
+.copy-btn{display:inline-block;margin-top:6px;padding:4px 10px;border-radius:10px;background:#c084fc22;border:1px solid #c084fc44;font-size:11px;color:var(--accent);cursor:pointer;transition:all 0.2s;}
+.copy-btn:active{background:#c084fc44;}
 .typing-dots{display:flex;gap:4px;padding:4px 2px;}
 .typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite;}
 .typing-dots span:nth-child(2){animation-delay:.2s;}
 .typing-dots span:nth-child(3){animation-delay:.4s;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
-/* tasks */
-#tasks-wrap{margin:0.5rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;z-index:1;}
-#tasks-head{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--border);}
+#tasks-wrap{margin:0.4rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative;z-index:1;}
+#tasks-head{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid var(--border);}
 #tasks-head span{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;}
 #tasks-head em{font-style:normal;font-size:11px;color:var(--muted);}
-#task-list{max-height:100px;overflow-y:auto;}
+#task-list{max-height:90px;overflow-y:auto;}
 .task-row{display:flex;align-items:center;gap:10px;padding:6px 14px;transition:background 0.2s;}
 .task-row:hover{background:var(--surface2);}
 .task-cb{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--muted);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:9px;color:white;}
 .task-cb.done{background:var(--accent);border-color:var(--accent);}
-.task-txt{flex:1;font-size:13px;color:var(--text);}
+.task-txt{flex:1;font-size:12.5px;color:var(--text);}
 .task-txt.done{text-decoration:line-through;color:var(--muted);}
 .task-del{font-size:13px;color:var(--muted);cursor:pointer;opacity:0;transition:opacity 0.2s;}
 .task-row:hover .task-del{opacity:1;}
 #tasks-empty{padding:10px;text-align:center;font-size:12px;color:var(--muted);}
-/* input */
-#input-section{padding:0.5rem 1rem;padding-bottom:max(env(safe-area-inset-bottom),1rem);position:relative;z-index:1;}
+#input-section{padding:0.4rem 1rem;padding-bottom:max(env(safe-area-inset-bottom),0.75rem);position:relative;z-index:1;}
 #input-bar{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:50px;padding:6px 6px 6px 16px;transition:border-color 0.3s;}
 #input-bar:focus-within{border-color:#c084fc44;}
 #text-input{flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);}
@@ -91,6 +89,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 #send-btn svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 #send-btn:active{transform:scale(0.96);}
 #no-voice{display:none;font-size:11px;color:var(--danger);text-align:center;margin-top:5px;}
+/* toast */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a26;border:1px solid #c084fc44;color:var(--text);padding:8px 18px;border-radius:20px;font-size:13px;opacity:0;transition:all 0.3s;z-index:999;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -117,23 +118,25 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
     <div id="orb-label">tap to speak</div>
   </div>
 
-  <!-- Quick action buttons -->
   <div id="quick-actions">
-    <button class="qa-btn" onclick="quickAction('Open Instagram')">📸 Instagram</button>
-    <button class="qa-btn" onclick="quickAction('Open WhatsApp')">💬 WhatsApp</button>
-    <button class="qa-btn" onclick="quickAction('Open YouTube')">🎥 YouTube</button>
-    <button class="qa-btn" onclick="quickAction('Open Gallery')">🖼️ Gallery</button>
-    <button class="qa-btn" onclick="quickAction('Open Spotify')">🎵 Spotify</button>
-    <button class="qa-btn" onclick="quickAction('Open Maps')">🗺️ Maps</button>
-    <button class="qa-btn" onclick="quickAction('Open Gmail')">📧 Gmail</button>
-    <button class="qa-btn" onclick="quickAction('Open TikTok')">🎵 TikTok</button>
+    <button class="qa-btn" onclick="openApp('instagram')">📸 Instagram</button>
+    <button class="qa-btn" onclick="openApp('whatsapp')">💬 WhatsApp</button>
+    <button class="qa-btn" onclick="openApp('youtube')">🎥 YouTube</button>
+    <button class="qa-btn" onclick="openApp('tiktok')">🎵 TikTok</button>
+    <button class="qa-btn" onclick="openApp('spotify')">🎶 Spotify</button>
+    <button class="qa-btn" onclick="openApp('maps')">🗺️ Maps</button>
+    <button class="qa-btn" onclick="openApp('gmail')">📧 Gmail</button>
+    <button class="qa-btn" onclick="openApp('camera')">📷 Camera</button>
+    <button class="qa-btn" onclick="quickAction('Write me a viral Instagram Reel caption about AI tools')">✍️ Caption</button>
+    <button class="qa-btn" onclick="quickAction('Give me 10 viral hashtags for AI content on Instagram')">🔥 Hashtags</button>
+    <button class="qa-btn" onclick="quickAction('Give me 5 viral YouTube Shorts ideas about AI tools')">💡 Ideas</button>
   </div>
 
   <div id="chat-wrap">
     <div id="chat">
       <div class="msg aria">
         <div class="avatar">A</div>
-        <div class="bubble">Hey! I'm ARIA 💜 I can open your apps, manage tasks, draft captions, and answer anything. Try "Open Instagram" or tap the buttons above!</div>
+        <div class="bubble">Hey Aerie! I'm ARIA 💜 Tap any button above or talk to me. I can open your apps, write captions, generate hashtags, and manage your content. Let's go! 🚀</div>
       </div>
     </div>
   </div>
@@ -148,7 +151,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 
   <div id="input-section">
     <div id="input-bar">
-      <input id="text-input" type="text" placeholder="Ask ARIA or say 'open Instagram'..." autocomplete="off"/>
+      <input id="text-input" type="text" placeholder="Say 'open Instagram' or ask anything..." autocomplete="off"/>
       <button id="mic-btn" aria-label="Voice input">
         <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
       </button>
@@ -159,6 +162,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
     <div id="no-voice">Voice not supported. Use text input.</div>
   </div>
 </div>
+<div id="toast"></div>
 
 <script>
 const GROQ_KEY = "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";
@@ -174,7 +178,7 @@ const statusDot = document.getElementById('status-dot');
 const statusLabel = document.getElementById('status-label');
 const taskList = document.getElementById('task-list');
 const taskCount = document.getElementById('task-count');
-const noVoice = document.getElementById('no-voice');
+const toastEl = document.getElementById('toast');
 
 let tasks = JSON.parse(localStorage.getItem('aria-tasks')||'[]');
 let isThinking = false;
@@ -184,58 +188,81 @@ let history = [];
 
 function saveTasks(){localStorage.setItem('aria-tasks',JSON.stringify(tasks));}
 
-// App deep links
-const APP_ACTIONS = {
-  'open instagram': ()=>{ window.location.href='instagram://'; setTimeout(()=>window.open('https://instagram.com','_blank'),1500); },
-  'open whatsapp': ()=>{ window.location.href='whatsapp://'; setTimeout(()=>window.open('https://wa.me','_blank'),1500); },
-  'open youtube': ()=>{ window.location.href='youtube://'; setTimeout(()=>window.open('https://youtube.com','_blank'),1500); },
-  'open facebook': ()=>{ window.location.href='fb://'; setTimeout(()=>window.open('https://facebook.com','_blank'),1500); },
-  'open tiktok': ()=>{ window.location.href='tiktok://'; setTimeout(()=>window.open('https://tiktok.com','_blank'),1500); },
-  'open gmail': ()=>window.open('https://mail.google.com','_blank'),
-  'open google': ()=>window.open('https://google.com','_blank'),
-  'open maps': ()=>window.open('https://maps.google.com','_blank'),
-  'open spotify': ()=>{ window.location.href='spotify://'; setTimeout(()=>window.open('https://open.spotify.com','_blank'),1500); },
-  'open netflix': ()=>{ window.location.href='nflx://'; setTimeout(()=>window.open('https://netflix.com','_blank'),1500); },
-  'open twitter': ()=>window.open('https://twitter.com','_blank'),
-  'open camera': ()=>window.open('https://camera.google.com','_blank'),
-  'open gallery': ()=>window.open('https://photos.google.com','_blank'),
-  'open photos': ()=>window.open('https://photos.google.com','_blank'),
-  'play music': ()=>{ window.location.href='spotify://'; setTimeout(()=>window.open('https://open.spotify.com','_blank'),1500); },
-};
+function showToast(msg){
+  toastEl.textContent=msg;
+  toastEl.classList.add('show');
+  setTimeout(()=>toastEl.classList.remove('show'),2500);
+}
 
-const ACTION_REPLIES = {
-  'open instagram':'Opening Instagram for you! 📸',
-  'open whatsapp':'Opening WhatsApp! 💬',
-  'open youtube':'Opening YouTube! 🎥',
-  'open facebook':'Opening Facebook! 👍',
-  'open tiktok':'Opening TikTok! 🎵',
-  'open gmail':'Opening Gmail! 📧',
-  'open google':'Opening Google! 🔍',
-  'open maps':'Opening Maps! 🗺️',
-  'open spotify':'Opening Spotify! 🎶',
-  'open netflix':'Opening Netflix! 🎬',
-  'open twitter':'Opening Twitter! 🐦',
-  'open camera':'Opening Camera! 📷',
-  'open gallery':'Opening your Photos! 🖼️',
-  'open photos':'Opening your Photos! 🖼️',
-  'play music':'Playing music on Spotify! 🎵',
-};
+// Open apps using intent URLs — forces Android to open native app
+window.openApp = function(app){
+  const apps = {
+    instagram: {intent:'intent://instagram.com/#Intent;package=com.instagram.android;scheme=https;end', fallback:'https://instagram.com'},
+    whatsapp:  {intent:'intent://send/#Intent;package=com.whatsapp;scheme=whatsapp;end', fallback:'https://wa.me'},
+    youtube:   {intent:'intent://www.youtube.com/#Intent;package=com.google.android.youtube;scheme=https;end', fallback:'https://youtube.com'},
+    tiktok:    {intent:'intent://tiktok.com/#Intent;package=com.zhiliaoapp.musically;scheme=https;end', fallback:'https://tiktok.com'},
+    spotify:   {intent:'intent://spotify.com/#Intent;package=com.spotify.music;scheme=https;end', fallback:'https://open.spotify.com'},
+    maps:      {intent:'intent://maps.google.com/#Intent;package=com.google.android.apps.maps;scheme=https;end', fallback:'https://maps.google.com'},
+    gmail:     {intent:'intent://gmail.com/#Intent;package=com.google.android.gm;scheme=https;end', fallback:'https://mail.google.com'},
+    facebook:  {intent:'intent://facebook.com/#Intent;package=com.facebook.katana;scheme=https;end', fallback:'https://facebook.com'},
+    twitter:   {intent:'intent://twitter.com/#Intent;package=com.twitter.android;scheme=https;end', fallback:'https://twitter.com'},
+    netflix:   {intent:'intent://netflix.com/#Intent;package=com.netflix.mediaclient;scheme=https;end', fallback:'https://netflix.com'},
+    camera:    {intent:'intent:#Intent;action=android.media.action.IMAGE_CAPTURE;end', fallback:'https://camera.google.com'},
+    snapchat:  {intent:'intent://snapchat.com/#Intent;package=com.snapchat.android;scheme=https;end', fallback:'https://snapchat.com'},
+  };
+  const a = apps[app];
+  if(!a){ showToast('App not found'); return; }
+  // Try intent first (opens native app on Android)
+  const link = document.createElement('a');
+  link.href = a.intent;
+  link.style.display='none';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  // Fallback after 2s if app not installed
+  setTimeout(()=>{ try{ window.open(a.fallback,'_blank'); }catch(e){} }, 2000);
+  const names = {instagram:'Instagram',whatsapp:'WhatsApp',youtube:'YouTube',tiktok:'TikTok',spotify:'Spotify',maps:'Maps',gmail:'Gmail',facebook:'Facebook',twitter:'Twitter',netflix:'Netflix',camera:'Camera',snapchat:'Snapchat'};
+  showToast(`Opening ${names[app]||app}...`);
+}
 
-function checkAppAction(text){
-  const lower = text.toLowerCase();
-  for(const [key, action] of Object.entries(APP_ACTIONS)){
-    if(lower.includes(key)){ action(); return ACTION_REPLIES[key]||'Done! Opening that for you! ✨'; }
+function checkVoiceAction(text){
+  const t = text.toLowerCase().trim();
+  // App opens
+  const appMap = {
+    'instagram':['open instagram','instagram'],
+    'whatsapp':['open whatsapp','whatsapp'],
+    'youtube':['open youtube','youtube'],
+    'tiktok':['open tiktok','tiktok'],
+    'spotify':['open spotify','spotify','play music','play song'],
+    'maps':['open maps','open google maps','navigate','directions'],
+    'gmail':['open gmail','open email','open mail'],
+    'facebook':['open facebook','facebook'],
+    'twitter':['open twitter','twitter'],
+    'netflix':['open netflix','netflix'],
+    'camera':['open camera','camera','take photo','take picture'],
+    'snapchat':['open snapchat','snapchat'],
+  };
+  for(const [app, triggers] of Object.entries(appMap)){
+    if(triggers.some(tr=>t.includes(tr))){
+      openApp(app);
+      return `Opening ${app.charAt(0).toUpperCase()+app.slice(1)} for you! 🚀`;
+    }
   }
-  const searchMatch = lower.match(/^search (?:for |about |on google )?(.+)/);
+  // Search Google
+  const searchMatch = t.match(/^search(?:\s+for|\s+about|\s+on google)?\s+(.+)/);
   if(searchMatch){ window.open(`https://www.google.com/search?q=${encodeURIComponent(searchMatch[1])}`,'_blank'); return `Searching Google for "${searchMatch[1]}"! 🔍`; }
-  const callMatch = lower.match(/^call (.+)/);
+  // Call
+  const callMatch = t.match(/^call\s+(.+)/);
   if(callMatch){ window.location.href=`tel:${callMatch[1].replace(/\s/g,'')}`; return `Calling ${callMatch[1]}! 📞`; }
-  const waMatch = lower.match(/(?:send whatsapp to|whatsapp message to) (.+)/);
-  if(waMatch){ window.open(`https://wa.me/?text=${encodeURIComponent(waMatch[1])}`,'_blank'); return `Opening WhatsApp for ${waMatch[1]}! 💬`; }
-  const ytMatch = lower.match(/^(?:youtube|watch on youtube|play on youtube) (.+)/);
-  if(ytMatch){ window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(ytMatch[1])}`,'_blank'); return `Searching YouTube for "${ytMatch[1]}"! 🎥`; }
-  const mapsMatch = lower.match(/(?:navigate to|directions to|take me to) (.+)/);
-  if(mapsMatch){ window.open(`https://maps.google.com/maps?q=${encodeURIComponent(mapsMatch[1])}`,'_blank'); return `Getting directions to ${mapsMatch[1]}! 🗺️`; }
+  // YouTube search
+  const ytMatch = t.match(/^(?:search youtube|youtube search|watch)\s+(.+)/);
+  if(ytMatch){ window.open(`https://youtube.com/results?search_query=${encodeURIComponent(ytMatch[1])}`,'_blank'); return `Searching YouTube for "${ytMatch[1]}"! 🎥`; }
+  // Navigate
+  const navMatch = t.match(/^(?:navigate to|take me to|directions to|go to)\s+(.+)/);
+  if(navMatch){ window.open(`https://maps.google.com/?q=${encodeURIComponent(navMatch[1])}`,'_blank'); return `Opening directions to ${navMatch[1]}! 🗺️`; }
+  // WhatsApp message
+  const waMatch = t.match(/^(?:send whatsapp|whatsapp message|message on whatsapp)\s+(?:to\s+)?(.+)/);
+  if(waMatch){ window.open(`https://wa.me/?text=${encodeURIComponent(waMatch[1])}`,'_blank'); return `Opening WhatsApp! 💬`; }
   return null;
 }
 
@@ -248,18 +275,37 @@ function setStatus(state){
   else{statusDot.classList.add('on');statusLabel.textContent='online';orb.className='';orbLabel.textContent='tap to speak';}
 }
 
-function addMsg(role,text){
+function addMsg(role, text, showCopy=false){
   const isUser=role==='user';
   const div=document.createElement('div');
   div.className=`msg ${isUser?'user':'aria'}`;
-  div.innerHTML=`<div class="avatar">${isUser?'U':'A'}</div><div class="bubble">${text}</div>`;
+  let inner = `<div class="bubble">${text}`;
+  if(showCopy) inner += `<br><span class="copy-btn" onclick="copyText(this)" data-text="${text.replace(/"/g,'&quot;')}">📋 Copy</span>`;
+  inner += `</div>`;
+  div.innerHTML=`<div class="avatar">${isUser?'U':'A'}</div>${inner}`;
   chat.appendChild(div);
   chat.scrollTop=chat.scrollHeight;
 }
 
+window.copyText = function(btn){
+  const text = btn.getAttribute('data-text');
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='✅ Copied!';
+    showToast('Copied to clipboard!');
+    setTimeout(()=>btn.textContent='📋 Copy',2000);
+  }).catch(()=>{
+    // fallback
+    const ta=document.createElement('textarea');
+    ta.value=text;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    btn.textContent='✅ Copied!';
+    showToast('Copied!');
+    setTimeout(()=>btn.textContent='📋 Copy',2000);
+  });
+}
+
 function showTyping(){
-  const div=document.createElement('div');
-  div.className='msg aria';div.id='typing';
+  const div=document.createElement('div');div.className='msg aria';div.id='typing';
   div.innerHTML='<div class="avatar">A</div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
   chat.appendChild(div);chat.scrollTop=chat.scrollHeight;
 }
@@ -281,22 +327,24 @@ window.delTask=i=>{tasks.splice(i,1);saveTasks();updateTasks();};
 
 function getBestVoice(){
   const voices=speechSynthesis.getVoices();
-  const preferred=['Google US English','Samantha','Karen','Tessa','Microsoft Zira','Moira','Victoria','Veena'];
+  const preferred=['Google US English','Samantha','Karen','Tessa','Microsoft Zira','Moira','Victoria'];
   for(const name of preferred){const v=voices.find(v=>v.name.includes(name));if(v)return v;}
   const fem=voices.find(v=>v.name.toLowerCase().includes('female'));
-  if(fem)return fem;
-  return voices.find(v=>v.lang.startsWith('en'))||voices[0]||null;
+  return fem||voices.find(v=>v.lang.startsWith('en'))||voices[0]||null;
 }
-
 function speak(text){
   if(!window.speechSynthesis)return;
   speechSynthesis.cancel();
-  const clean=text.replace(/[*_`#]/g,'');
+  const clean=text.replace(/[*_`#📸💬🎥🎵🔍🗺️📧📷✅💜🚀🔥💡]/g,'').trim();
   const u=new SpeechSynthesisUtterance(clean);
   u.rate=1.08;u.pitch=1.35;u.volume=1;
-  const voice=getBestVoice();
-  if(voice)u.voice=voice;
+  const v=getBestVoice();if(v)u.voice=v;
   speechSynthesis.speak(u);
+}
+
+// Detect if reply is content (caption/hashtags) to show copy button
+function isContentReply(reply){
+  return reply.length > 80 || reply.includes('#') || reply.toLowerCase().includes('caption') || reply.toLowerCase().includes('hook');
 }
 
 async function sendToAria(userMsg){
@@ -305,10 +353,10 @@ async function sendToAria(userMsg){
   addMsg('user',userMsg);
   setStatus('thinking');
 
-  // Check app actions first — instant response
-  const actionReply = checkAppAction(userMsg);
+  // Check app/voice actions first
+  const actionReply=checkVoiceAction(userMsg);
   if(actionReply){
-    addMsg('aria', actionReply);
+    addMsg('aria',actionReply);
     speak(actionReply);
     setStatus('online');
     isThinking=false;
@@ -317,21 +365,35 @@ async function sendToAria(userMsg){
 
   showTyping();
   const taskSnap=tasks.length?tasks.map((t,i)=>`${i+1}.[${t.done?'done':'pending'}] ${t.label}`).join(', '):'none';
-  const systemPrompt=`You are ARIA — a smart, warm, female AI personal assistant for Aerie Sulemani, an AI content creator making Instagram Reels and YouTube Shorts.
+
+  const systemPrompt=`You are ARIA — a sharp, warm, young female AI assistant for Aerie Sulemani, an AI content creator making viral Instagram Reels and YouTube Shorts about AI tools and making money online.
 
 Current tasks: ${taskSnap}
 
-You help with: tasks, Instagram/YouTube captions, content ideas, AI tools advice, answering questions.
+Your specialties:
+- Writing viral Instagram captions with hooks, emojis, CTAs
+- Writing YouTube Shorts scripts with scroll-stopping hooks
+- Generating trending hashtags for AI/make money online niche
+- Content ideas for Reels and Shorts
+- Advice on AI tools (ChatGPT, Canva, HeyGen, Pictory, Jasper etc.)
+- Task management
 
-Respond ONLY in this exact JSON:
-{"reply": "short friendly response max 2 sentences", "actions": []}
+ALWAYS respond in this exact JSON:
+{"reply": "your response here", "actions": [], "is_content": false}
+
+Set is_content to true if reply contains a caption, script, hashtags, or long content.
 
 Task actions:
-{"reply": "Added!", "actions": [{"type": "add", "label": "task name"}]}
-{"reply": "Done!", "actions": [{"type": "done", "index": 0}]}
-{"reply": "Deleted!", "actions": [{"type": "delete", "index": 0}]}
+{"reply": "Added!", "actions": [{"type": "add", "label": "task name"}], "is_content": false}
+{"reply": "Done!", "actions": [{"type": "done", "index": 0}], "is_content": false}
+{"reply": "Deleted!", "actions": [{"type": "delete", "index": 0}], "is_content": false}
 
-Tone: warm, young, confident female. No markdown. ONLY valid JSON.`;
+Rules:
+- For captions/scripts: write the FULL content, no shortcuts
+- For chat: max 2 sentences, warm and energetic
+- Young female tone, confident
+- No markdown asterisks
+- ONLY valid JSON`;
 
   history.push({role:'user',content:userMsg});
   if(history.length>12)history=history.slice(-12);
@@ -340,24 +402,24 @@ Tone: warm, young, confident female. No markdown. ONLY valid JSON.`;
     const res=await fetch(GROQ_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':`Bearer ${GROQ_KEY}`},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:400,messages:[{role:'system',content:systemPrompt},...history]})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:800,messages:[{role:'system',content:systemPrompt},...history]})
     });
     const data=await res.json();
-    const raw=data.choices?.[0]?.message?.content||'{"reply":"Sorry, try again!","actions":[]}';
+    const raw=data.choices?.[0]?.message?.content||'{"reply":"Sorry, try again!","actions":[],"is_content":false}';
     history.push({role:'assistant',content:raw});
     let parsed;
     try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}
-    catch{parsed={reply:raw,actions:[]};}
+    catch{parsed={reply:raw,actions:[],is_content:false};}
     removeTyping();
-    addMsg('aria',parsed.reply);
-    speak(parsed.reply);
+    const showCopy = parsed.is_content || isContentReply(parsed.reply);
+    addMsg('aria',parsed.reply,showCopy);
+    speak(parsed.reply.substring(0,200));
     (parsed.actions||[]).forEach(a=>{
       if(a.type==='add')tasks.push({label:a.label,done:false});
       if(a.type==='done'&&tasks[a.index])tasks[a.index].done=true;
       if(a.type==='delete')tasks.splice(a.index,1);
     });
-    saveTasks();
-    updateTasks();
+    saveTasks();updateTasks();
   }catch(e){
     removeTyping();
     addMsg('aria','Connection issue. Check your internet and try again.');
@@ -381,10 +443,9 @@ if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
   micBtn.addEventListener('click',()=>{if(isListening)stopListen();else startListen();});
   window.orbClick=()=>{if(isListening)stopListen();else startListen();};
 }else{
-  noVoice.style.display='block';
+  document.getElementById('no-voice').style.display='block';
   window.orbClick=()=>{textInput.focus();};
 }
-
 speechSynthesis.onvoiceschanged=()=>{};
 updateTasks();
 </script>
