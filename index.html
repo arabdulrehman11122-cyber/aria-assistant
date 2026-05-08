@@ -227,25 +227,23 @@ window.delTask=i=>{tasks.splice(i,1);saveTasks();updateTasks();};
 
 function getBestVoice(){
   const voices=speechSynthesis.getVoices();
-  // Priority list — warm, natural female voices
+  // Priority: young, bright, natural-sounding female voices
   const preferred=[
     'Google US English',
-    'Samantha',
-    'Microsoft Zira',
-    'Karen',
-    'Moira',
-    'Tessa',
-    'Veena',
+    'Samantha',          // macOS/iOS — young, clear
+    'Karen',             // Australian — bright and young
+    'Tessa',             // South African — light and fresh
+    'Microsoft Zira',    // Windows — young female
+    'Moira',             // Irish — natural
     'Victoria',
+    'Veena',
   ];
   for(const name of preferred){
     const v=voices.find(v=>v.name.includes(name));
     if(v)return v;
   }
-  // fallback: any female-labeled voice
   const fem=voices.find(v=>v.name.toLowerCase().includes('female'));
   if(fem)return fem;
-  // last resort: first English voice
   return voices.find(v=>v.lang.startsWith('en'))||voices[0]||null;
 }
 
@@ -254,11 +252,12 @@ function speak(text){
   speechSynthesis.cancel();
   const clean=text.replace(/[*_`#]/g,'');
   const u=new SpeechSynthesisUtterance(clean);
-  u.rate=0.97;   // slightly slower = warmer feel
-  u.pitch=1.15;  // slightly higher = friendly girl tone
+  u.rate=1.08;   // slightly faster = young, energetic feel
+  u.pitch=1.35;  // higher pitch = younger girl sound
   u.volume=1;
   const voice=getBestVoice();
   if(voice)u.voice=voice;
+  // Small trick: split into sentences for more natural delivery
   speechSynthesis.speak(u);
 }
 
